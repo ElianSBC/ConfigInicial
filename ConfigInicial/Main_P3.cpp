@@ -1,3 +1,7 @@
+//Practica #3                                    Barqueras Caputitla Elian Serge
+//Fecha de entrega : 3 de septiembre 2026                      320306329
+
+
 #include<iostream>
 
 //#define GLEW_STATIC
@@ -29,7 +33,7 @@ int main() {
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Proyecciones y transformaciones basicas", nullptr, nullptr);
+	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Barqueras Capultitla Elian Serge", nullptr, nullptr);
 
 	int screenWidth, screenHeight;
 
@@ -218,9 +222,10 @@ int main() {
 		glm::mat4 model=glm::mat4(1);
 		glm::mat4 view=glm::mat4(1);
 	
-	    view = glm::translate(view, glm::vec3(0.0f,0.0f,-6.0f));
-		model = glm::rotate( model, 0.5f, glm::vec3( 1.0f, 3.0f, 2.0f ) ); // use to compare orthographic and perspective projection
-		model = glm::scale(model, glm::vec3(1.5f, 0.5f, 0.5f));
+	    view = glm::translate(view, glm::vec3(0.0f,1.5f,-6.0f));
+		model = glm::rotate( model, 0.5f, glm::vec3( 0.0f, 1.0f, 0.0f ) ); // use to compare orthographic and perspective projection
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
+		
 	  //view = glm::translate( view, glm::vec3( screenWidth / 2, screenHeight / 2,-300.0f ) ); // use with orthographic projection
 		
 		GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
@@ -236,21 +241,43 @@ int main() {
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		model = glm::mat4(1);
-		model = glm::translate(view, glm::vec3(-6.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, 0.5f, glm::vec3(6.0f, 0.0f, 2.0f));
+		model = glm::translate(view, glm::vec3(0.0f, -2.8f, 6.0f));
+		model = glm::rotate(model,0.5f, glm::vec3(0.0f, -3.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
 		model = glm::mat4(1);
-		model = glm::translate(view, glm::vec3(6.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, 0.5f, glm::vec3(6.0f, 5.0f, 2.0f));
-		model = glm::scale(model, glm::vec3(0.5f, 1.5f, 1.5f));
+		model = glm::translate(view, glm::vec3(0.0f, -3.63f, 6.0f));
+		model = glm::rotate(model, 2.5f, glm::vec3(-0.0f, -2.9f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		
 
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		model = glm::mat4(1);
+		model = glm::translate(view, glm::vec3(0.0f, -4.19f, 6.0f));
+		model = glm::rotate(model, 4.5f, glm::vec3(-2.5f, -1.7f, 2.0f));
+		model = glm::scale(model, glm::vec3(0.45f, 0.45f, 0.45));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+
+		model = glm::mat4(1);
+		model = glm::translate(view, glm::vec3(0.0f, -4.6f, 6.0f));
+		model = glm::rotate(model, 2.0f, glm::vec3(-2.4f, -1.5f, -1.2f));
+		model = glm::scale(model, glm::vec3(0.33f, 0.33f, 0.33));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
 
 
 		glBindVertexArray(0);

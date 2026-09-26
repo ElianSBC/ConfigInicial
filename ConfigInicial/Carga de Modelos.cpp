@@ -1,5 +1,5 @@
-//Previo #6                                                                          Barqueras Capultitla Elian Serge
-//Fecha de entrega : 20 septiembre 2026                                                  320306329
+//Practica #6                                                                          Barqueras Capultitla Elian Serge
+//Fecha de entrega : 25 septiembre 2026                                                  320306329
 
 // Std. Includes
 #include <string>
@@ -58,7 +58,7 @@ int main()
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
     // Create a GLFWwindow object that we can use for GLFW's functions
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Carga de modelos y camara sintetica", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Barqueras Capultitla Elian Serge", nullptr, nullptr);
 
     if (nullptr == window)
     {
@@ -99,12 +99,13 @@ int main()
 
     // Load models---------------------------------------------
 
-
-
+    Model pasto((char*)"Models/Road.obj");
+    Model sombrero((char*)"Models/13543_Tricorn_Hat_v1_l2.obj"); 
     Model futbol((char*)"Models/10536_soccerball_V1_iterations-2.obj");
     Model maleta((char*)"Models/suitcase_obj.obj");
     Model dog((char*)"Models/RedDog.obj");
     Model pelota((char*)"Models/13517_Beach_Ball_v2_L3.obj");
+    Model carro((char*)"Models/carro.obj");
 
 
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
@@ -142,7 +143,7 @@ int main()
 
        
         glm::mat4 modelPelota(1.0f); 
-        modelPelota = glm::translate(modelPelota, glm::vec3(-0.85f, -0.27f, 0.0f));
+        modelPelota = glm::translate(modelPelota, glm::vec3(-0.85f, -0.22f, 0.0f));
         modelPelota = glm::scale(modelPelota, glm::vec3(0.01f, 0.01f, 0.01f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelPelota));
         pelota.Draw(shader);
@@ -157,12 +158,34 @@ int main()
         maleta.Draw(shader);
 
         glm::mat4 modelfutbol(1.0f);
-        modelfutbol = glm::translate(modelfutbol, glm::vec3(-0.4f, 0.0f, 0.0f));
+        modelfutbol = glm::translate(modelfutbol, glm::vec3(-0.9f, 0.0f, 0.0f));
         modelfutbol = glm::rotate(modelfutbol, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        modelfutbol = glm::scale(modelfutbol, glm::vec3(0.01f, 0.01f, 0.01f));
+        modelfutbol = glm::scale(modelfutbol, glm::vec3(0.028f, 0.028f, 0.028f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelfutbol));
 
         futbol.Draw(shader);
+
+        glm::mat4 modelsombrero(1.0f);
+        modelsombrero = glm::translate(modelsombrero, glm::vec3(-0.34f, -0.15f, 0.0f));
+        modelsombrero = glm::rotate(modelsombrero, glm::radians(180.0f), glm::vec3(1.0f, 4.0f, 5.0f));
+        modelsombrero = glm::scale(modelsombrero, glm::vec3(0.01f, 0.01f, 0.01f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelsombrero));
+
+        sombrero.Draw(shader);
+
+        glm::mat4 modelpasto(1.0f);
+        modelpasto = glm::translate(modelpasto, glm::vec3(-0.85f, -0.39f, 0.0f));
+        modelpasto = glm::rotate(modelpasto, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        modelpasto = glm::scale(modelpasto, glm::vec3(1.00f, 1.0f, 1.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelpasto));
+        pasto.Draw(shader);
+
+       glm::mat4 modelcarro(1.0f);
+        modelcarro = glm::translate(modelcarro, glm::vec3(-0.85f, -0.39f, -1.0f));
+        modelcarro = glm::rotate(modelcarro, glm::radians(270.0f), glm::vec3(2.0f, 0.0f, 0.0f));
+        modelcarro = glm::scale(modelcarro, glm::vec3(1.00f, 1.0f, 1.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelcarro));
+        carro.Draw(shader);
 
         
         

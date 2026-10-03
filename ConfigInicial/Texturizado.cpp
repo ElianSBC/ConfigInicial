@@ -1,5 +1,5 @@
-//Previo #7                                      Barqueras Capultitla Elian Serge
-//Fecha de entrega : 27 septiembre 2026                        320306329
+//Practica #7                                      Barqueras Capultitla Elian Serge
+//Fecha de entrega : 02 octubre 2026                        320306329
 
 #include <iostream>
 #include <cmath>
@@ -102,20 +102,56 @@ int main()
 	// Set up vertex data (and buffer(s)) and attribute pointers
 	GLfloat vertices[] =
 	{
-		// Positions            // Colors              // Texture Coords
-		-0.5f, -0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.0f,0.0f,
-		0.5f, -0.5f, 0.0f,	   1.0f, 1.0f,1.0f,		1.0f,0.0f,
-		0.5f,  0.5f, 0.0f,     1.0f, 1.0f,1.0f,	    1.0f,1.0f,
-		-0.5f,  0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.0f,1.0f,
+		
+	// Positions             // Colors              // Texture Coords
+
+	// CARA FRONTAL Dado 4
+	-0.5f, -0.5f,  0.5f,     1.0f, 1.0f, 1.0f,      0.5f, 0.75f,
+	 0.5f, -0.5f,  0.5f,     1.0f, 1.0f, 1.0f,      0.25f, 0.75f,
+	 0.5f,  0.5f,  0.5f,     1.0f, 1.0f, 1.0f,      0.25f, 1.0f,
+	-0.5f,  0.5f,  0.5f,     1.0f, 1.0f, 1.0f,      0.5f, 1.0f,
+
+	//CARA TRASERA
+	-0.5f, -0.5f, -0.5f,     1.0f, 1.0f, 1.0f,      0.5f, 0.5f,
+	 0.5f, -0.5f, -0.5f,     1.0f, 1.0f, 1.0f,      0.25f, 0.5f,
+	 0.5f,  0.5f, -0.5f,     1.0f, 1.0f, 1.0f,      0.25f, 0.25f,
+	-0.5f,  0.5f, -0.5f,     1.0f, 1.0f, 1.0f,      0.5f, 0.25f,
+
+	//CARA IZQUIERDA
+	-0.5f,  0.5f,  0.5f,     1.0f, 1.0f, 1.0f,      0.75f, 0.0f,
+	-0.5f,  0.5f, -0.5f,     1.0f, 1.0f, 1.0f,      0.5f, 0.0f,
+	-0.5f, -0.5f, -0.5f,     1.0f, 1.0f, 1.0f,      0.5f, 0.25f,
+	-0.5f, -0.5f,  0.5f,     1.0f, 1.0f, 1.0f,      0.75f, 0.25f,
+
+	// CARA DERECHA
+	 0.5f,  0.5f,  0.5f,     1.0f, 1.0f, 1.0f,      0.5f, 0.0f,
+	 0.5f, -0.5f,  0.5f,     1.0f, 1.0f, 1.0f,      0.25f, 0.0f,
+	 0.5f, -0.5f, -0.5f,     1.0f, 1.0f, 1.0f,      0.25f, 0.25f,
+	 0.5f,  0.5f, -0.5f,     1.0f, 1.0f, 1.0f,      0.5f, 0.25f,
+
+	 //CARA SUPERIOR
+	 -0.5f,  0.5f, -0.5f,     1.0f, 1.0f, 1.0f,      0.5f, 0.5f,
+	  0.5f,  0.5f, -0.5f,     1.0f, 1.0f, 1.0f,      0.25f, 0.5f,
+	  0.5f,  0.5f,  0.5f,     1.0f, 1.0f, 1.0f,      0.25f, 0.75f,
+	 -0.5f,  0.5f,  0.5f,     1.0f, 1.0f, 1.0f,      0.5f, 0.75f,
+
+	 //CARA INFERIOR 
+	 -0.5f, -0.5f, -0.5f,     1.0f, 1.0f, 1.0f,      0.0f, 0.0f,
+	  0.5f, -0.5f, -0.5f,     1.0f, 1.0f, 1.0f,      0.25f, 0.0f,
+	  0.5f, -0.5f,  0.5f,     1.0f, 1.0f, 1.0f,      0.25f, 0.25f,
+	 -0.5f, -0.5f,  0.5f,     1.0f, 1.0f, 1.0f,      0.0f, 0.25f
+
 
 		
 	};
 
-	GLuint indices[] =
-	{  // Note that we start from 0!
-		0,1,3,
-		1,2,3
-	
+	GLuint indices[] = {
+	0,  1,  2,      2,  3,  0,      
+	4,  5,  6,      6,  7,  4,      
+	8,  9,  10,     10, 11, 8,      
+	12, 13, 14,     14, 15, 12,     
+	16, 17, 18,     18, 19, 16,     
+	20, 21, 22,     22, 23, 20     
 	};
 
 	// First, set the container's VAO (and VBO)
@@ -178,7 +214,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
 	// Diffuse map
-	image = stbi_load("images/checker_Tex.png", &textureWidth, &textureHeight, &nrChannels,0);
+	image = stbi_load("images/dado.png", &textureWidth, &textureHeight, &nrChannels,0);
 	glBindTexture(GL_TEXTURE_2D, texture1);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
@@ -194,62 +230,9 @@ int main()
 	stbi_image_free(image);
 
 
-	//imgaen2
-
-	glBindTexture(GL_TEXTURE_2D, texture2);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
-	image2 = stbi_load("images/window.png", &textureWidth, &textureHeight, &nrChannels, 0);
-	if (image2)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureWidth, textureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, image2);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(image2);
 
 
-	//Imagen 3
-	glBindTexture(GL_TEXTURE_2D, texture3);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
-	image3 = stbi_load("images/letter.png", &textureWidth, &textureHeight, &nrChannels, 0);
-	if (image3)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureWidth, textureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, image3);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(image3);
 
-
-	//imagen 4
-	glBindTexture(GL_TEXTURE_2D, texture4);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
-	image4 = stbi_load("images/wood.png", &textureWidth, &textureHeight, &nrChannels, 0);
-	if (image4)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureWidth, textureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, image4);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(image4);
 
 
 	
@@ -293,43 +276,11 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		// Draw the light object (using light's vertex attributes)
 		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 
 
-		//Textura 2
-		glBindTexture(GL_TEXTURE_2D, texture2);
-		glm::mat4 model2 = glm::translate(glm::mat4(1.0f), glm::vec3(-1.5f, 0.0f, 0.0f));
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model2));
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-
-
-		//Textura 3
-		glBindTexture(GL_TEXTURE_2D, texture3);
-		glm::mat4 model3 = glm::translate(glm::mat4(1.0f), glm::vec3(-2.5f, 0.0f, 0.0f));
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model3));
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-		//Textura 4
-
-		glBindTexture(GL_TEXTURE_2D, texture4);
-		glm::mat4 model4 = glm::translate(glm::mat4(1.0f), glm::vec3(-3.5f, 0.0f, 0.0f));
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model4));
-		glBindVertexArray(VAO);
-
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-
-		glBindVertexArray(0);
+	
 
 		// Swap the screen buffers
 		glfwSwapBuffers(window);

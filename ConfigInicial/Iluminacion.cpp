@@ -41,9 +41,9 @@ bool firstMouse = true;
 
 
 // Light attributes
-glm::vec3 lightPos(0.5f, 0.5f, 0.5f);
+glm::vec3 lightPos(2.5f, 0.5f, 0.5f);
 
-glm::vec3 lightPos2(-2.0f, 0.5f, 0.5f);
+glm::vec3 lightPos2(-4.0f, 0.5f, 0.5f);
 
 
 float movelightPos = 0.0f;
@@ -65,7 +65,7 @@ int main()
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
     // Create a GLFWwindow object that we can use for GLFW's functions
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Materiales e Iluminacion", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Barqueras Capultitla Elin Serge", nullptr, nullptr);
 
     if (nullptr == window)
     {
@@ -109,8 +109,16 @@ int main()
 
 
     // Load models
-    Model red_dog((char*)"Models/RedDog.obj");
+    Model pasto((char*)"Models/Road.obj");
+    Model sombrero((char*)"Models/13543_Tricorn_Hat_v1_l2.obj");
+    Model futbol((char*)"Models/10536_soccerball_V1_iterations-2.obj");
     Model maleta((char*)"Models/suitcase_obj.obj");
+    Model dog((char*)"Models/RedDog.obj");
+    Model pelota((char*)"Models/13517_Beach_Ball_v2_L3.obj");
+    Model carro((char*)"Models/carro.obj");
+    Model luna((char*)"Models/Moon.obj");
+    Model sol((char*)"Models/sol.obj");
+
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
     float vertices[] = {
@@ -229,14 +237,15 @@ int main()
 
         // Set lights properties
         //Luz 1
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light.ambient"),0.3f, 0.3f, 0.3f);
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light.diffuse"), 0.9f, 0.9f, 0.9f);
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light.specular"), 0.0f, 0.0f, 0.0f);
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "light.ambient"), 0.00f, 0.01f, 0.20f); // Sombras oscuras teñidas de azul
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "light.diffuse"), 0.00f, 0.04f, 0.70f); // Azul marino puro y saturado
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "light.specular"), 0.00f, 0.05f, 0.85f); // Reflejo brillante puramente azul
 
         //Luz 2
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light2.ambient"), 0.8f, 0.8f, 0.8f);
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light2.diffuse"), 0.7f, 0.4f, 0.4f);
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "light2.specular"), 0.0f, 0.0f, 0.0f);
+        // Luz 2: Sol (Luz de día mucho más amarilla/dorada)
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "light2.ambient"), 0.20f, 0.20f, 0.05f); // Sombras cálidas sin azul
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "light2.diffuse"), 1.00f, 0.85f, 0.30f); // Amarillo intenso
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "light2.specular"), 1.00f, 0.90f, 0.50f); // Reflejo dorado
 
         glm::mat4 view = camera.GetViewMatrix();
         glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
@@ -245,7 +254,7 @@ int main()
         // Set material properties
         
         glUniform3f(glGetUniformLocation(lightingShader.Program, "material.ambient"), 0.5f, 0.5f, 0.5f);
-        glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0.9f, 0.4f, 0.4f);
+        glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0.9f, 0.9f, 0.9f);
         glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 1.0f, 1.0f, 1.0f);
         glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 0.9f);
 
@@ -253,11 +262,61 @@ int main()
 
 
 
-
         // Draw the loaded model
         glm::mat4 modelDog(1.0f); // Matriz identidad
-        glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelDog));
-        red_dog.Draw(lightingShader);
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelDog));
+
+        dog.Draw(shader);
+
+
+
+        glm::mat4 modelPelota(1.0f);
+        modelPelota = glm::translate(modelPelota, glm::vec3(-0.85f, -0.22f, 0.0f));
+        modelPelota = glm::scale(modelPelota, glm::vec3(0.01f, 0.01f, 0.01f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelPelota));
+        pelota.Draw(shader);
+
+
+        glm::mat4 modelmaleta(1.0f);
+        modelmaleta = glm::translate(modelmaleta, glm::vec3(-0.40f, -0.37f, 0.0f));
+        modelmaleta = glm::rotate(modelmaleta, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        modelmaleta = glm::scale(modelmaleta, glm::vec3(0.01f, 0.01f, 0.01f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelmaleta));
+
+        maleta.Draw(shader);
+
+        glm::mat4 modelfutbol(1.0f);
+        modelfutbol = glm::translate(modelfutbol, glm::vec3(-0.9f, 0.0f, 0.0f));
+        modelfutbol = glm::rotate(modelfutbol, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        modelfutbol = glm::scale(modelfutbol, glm::vec3(0.028f, 0.028f, 0.028f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelfutbol));
+
+        futbol.Draw(shader);
+
+        glm::mat4 modelsombrero(1.0f);
+        modelsombrero = glm::translate(modelsombrero, glm::vec3(-0.34f, -0.15f, 0.0f));
+        modelsombrero = glm::rotate(modelsombrero, glm::radians(180.0f), glm::vec3(1.0f, 4.0f, 5.0f));
+        modelsombrero = glm::scale(modelsombrero, glm::vec3(0.01f, 0.01f, 0.01f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelsombrero));
+
+        sombrero.Draw(shader);
+
+        glm::mat4 modelpasto(1.0f);
+        modelpasto = glm::translate(modelpasto, glm::vec3(-0.85f, -0.39f, 0.0f));
+        modelpasto = glm::rotate(modelpasto, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        modelpasto = glm::scale(modelpasto, glm::vec3(1.00f, 1.0f, 1.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelpasto));
+        pasto.Draw(shader);
+
+        glm::mat4 modelcarro(1.0f);
+        modelcarro = glm::translate(modelcarro, glm::vec3(-0.85f, -0.39f, -1.0f));
+        modelcarro = glm::rotate(modelcarro, glm::radians(270.0f), glm::vec3(2.0f, 0.0f, 0.0f));
+        modelcarro = glm::scale(modelcarro, glm::vec3(1.00f, 1.0f, 1.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelcarro));
+        carro.Draw(shader);
+
+
+
 
 
         glm::mat4 model(1);
@@ -265,12 +324,7 @@ int main()
         glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         glBindVertexArray(VAO);
 
-        glm::mat4 modelmaleta(1.0f);
-        modelmaleta = glm::translate(modelmaleta, glm::vec3(-0.9f, -0.0f, 0.0f));
-        modelmaleta = glm::rotate(modelmaleta, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        modelmaleta = glm::scale(modelmaleta, glm::vec3(0.02f, 0.02f, 0.02f));
-        glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelmaleta));
-        maleta.Draw(lightingShader);
+       
 
 
 
@@ -284,23 +338,22 @@ int main()
 
 
 
-        lampshader.Use();
+        shader.Use();
         glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+        
         model = glm::mat4(1.0f);
         model = glm::translate(model, lightPos + movelightPos);
-        model = glm::scale(model, glm::vec3(0.3f));
+        model = glm::scale(model, glm::vec3(2.0f));
         glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        luna.Draw(shader);
         glBindVertexArray(0);
 
         model = glm::mat4(1.0f);
         model = glm::translate(model, lightPos2 + movelightPos2);
-        model = glm::scale(model, glm::vec3(0.3f));
+        model = glm::scale(model, glm::vec3(2.0f));
         glUniformMatrix4fv(glGetUniformLocation(lampshader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        sol.Draw(shader);
         glBindVertexArray(0);
 
         // Swap the buffers

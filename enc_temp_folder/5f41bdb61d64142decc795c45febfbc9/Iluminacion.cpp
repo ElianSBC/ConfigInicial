@@ -1,4 +1,4 @@
-//Practica8 #8                                      Barqueras Capultitla Elian Serge
+//Previo #8                                      Barqueras Capultitla Elian Serge
 //Fecha de entrega : 04 octubre 2026                        320306329
 
 // Std. Includes

@@ -18,10 +18,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-
 //Load Models
 #include "SOIL2/SOIL2.h"
-
 
 // Other includes
 #include "Shader.h"

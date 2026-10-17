@@ -1,5 +1,5 @@
-//Previo #9                                     Barqueras Capultitla Elian Serge
-//Fecha de entrega : 11 octubre 2026                        320306329
+//Practica #9                                     Barqueras Capultitla Elian Serge
+//Fecha de entrega : 16 octubre 2026                        320306329
 
 #include <iostream>
 #include <cmath>
@@ -156,9 +156,16 @@ int main()
 	Shader lightingShader("Shader/lighting.vs", "Shader/lighting.frag");
 	Shader lampShader("Shader/lamp.vs", "Shader/lamp.frag");
 	
-	Model Dog((char*)"Models/ball.obj");
-	Model Piso((char*)"Models/piso.obj");
+	// Cargar los modelos de la escena
+	Model Dog((char*)"Models/RedDog.obj");
+	
 
+	Model pasto((char*)"Models/Road.obj");
+	Model sombrero((char*)"Models/13543_Tricorn_Hat_v1_l2.obj");
+	Model futbol((char*)"Models/10536_soccerball_V1_iterations-2.obj");
+	Model maleta((char*)"Models/suitcase_obj.obj");
+	Model pelota((char*)"Models/13517_Beach_Ball_v2_L3.obj");
+	Model carro((char*)"Models/carro.obj");
 
 
 	// First, set the container's VAO (and VBO)
@@ -219,8 +226,8 @@ int main()
 
 		// Directional light
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"),0.1f,0.1f,0.1f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.1f, 0.1f, 0.1f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"),0.3,0.3f,0.3f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.3f, 0.3f, 0.3f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"),0.0f, 0.0f, 0.0f);
 
 
@@ -280,6 +287,31 @@ int main()
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.cutOff"), glm::cos(glm::radians(14.0f)));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.outerCutOff"), glm::cos(glm::radians(20.0f)));
 
+		// SpotLight2
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight2.position"),0.6f, 0.5f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight2.direction"),-0.1f, -2.0f, -2.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight2.ambient"), 1.0f, 4.0f, 0.7f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight2.diffuse"), 0.5f, 1.0f, 0.7f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight2.specular"), 0.0f, 0.0f, 0.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight2.constant"), 1.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight2.linear"), 0.3f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight2.quadratic"), 0.7f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight2.cutOff"), glm::cos(glm::radians(10.0f)));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight2.outerCutOff"), glm::cos(glm::radians(15.0f)));
+
+
+		// SpotLight3
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight3.position"), -2.0f, 0.5f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight3.direction"), -0.1f, -2.0f, -2.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight3.ambient"), 1.0f, 4.0f, 0.7f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight3.diffuse"), 0.5f, 1.0f, 0.7f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight3.specular"), 0.0f, 0.0f, 0.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight3.constant"), 1.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight3.linear"), 0.3f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight3.quadratic"), 0.7f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight3.cutOff"), glm::cos(glm::radians(10.0f)));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight3.outerCutOff"), glm::cos(glm::radians(15.0f)));
+		// Set material properties
 		// Set material properties
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 16.0f);
 
@@ -302,22 +334,110 @@ int main()
 	
 
 		//Carga de modelo 
-        view = camera.GetViewMatrix();	
-		model = glm::mat4(1);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Piso.Draw(lightingShader);
+        
+
+        // 1. PERRO
+    
+        model = glm::mat4(1.0f);
+
+        glUniformMatrix4fv(
+            modelLoc, 1, GL_FALSE, glm::value_ptr(model)
+        );
+
+        Dog.Draw(lightingShader);
 
 
-	
-		model = glm::mat4(1);
-		glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 1);
-	    Dog.Draw(lightingShader);
-		glDisable(GL_BLEND);  //Desactiva el canal alfa 
-		glBindVertexArray(0);
-	
+     
+        // 2. PELOTA DE PLAYA
+    
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-0.85f, -0.22f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+
+        glUniformMatrix4fv(
+            modelLoc, 1, GL_FALSE, glm::value_ptr(model)
+        );
+
+        pelota.Draw(lightingShader);
+
+
+  
+        // 3. MALETA
+        
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-0.40f, -0.37f, 0.0f));
+        model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+
+        glUniformMatrix4fv(
+            modelLoc, 1, GL_FALSE, glm::value_ptr(model)
+        );
+
+        maleta.Draw(lightingShader);
+
+
+      
+        // 4. BALÓN DE FÚTBOL
+      
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-0.9f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.028f, 0.028f, 0.028f));
+
+        glUniformMatrix4fv(
+            modelLoc, 1, GL_FALSE, glm::value_ptr(model)
+        );
+
+        futbol.Draw(lightingShader);
+
+
+        
+        // 5. SOMBRERO
+       
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-0.34f, -0.15f, 0.0f));
+        model = glm::rotate(model, glm::radians(180.0f), glm::vec3(1.0f, 4.0f, 5.0f));
+        model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+
+        glUniformMatrix4fv(
+            modelLoc, 1, GL_FALSE, glm::value_ptr(model)
+        );
+
+        sombrero.Draw(lightingShader);
+
+
+       
+        // 6. PASTO O CAMINO
+       
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-0.85f, -0.39f, 0.0f));
+        model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+
+        glUniformMatrix4fv(
+            modelLoc, 1, GL_FALSE, glm::value_ptr(model)
+        );
+
+        pasto.Draw(lightingShader);
+
+
+        // 7. CARRO
+    
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-0.85f, -0.39f, -1.0f));
+        model = glm::rotate(model, glm::radians(270.0f), glm::vec3(2.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+
+        glUniformMatrix4fv(
+            modelLoc, 1, GL_FALSE, glm::value_ptr(model)
+        );
+
+        carro.Draw(lightingShader);
+
+
+        // 8. PISO ORIGINAL DEL SEGUNDO CÓDIGO
+       
+   
 
 		// Also draw the lamp object, again binding the appropriate shader
 		lampShader.Use();
